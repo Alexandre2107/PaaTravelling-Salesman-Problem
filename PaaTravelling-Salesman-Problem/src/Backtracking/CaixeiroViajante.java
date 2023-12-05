@@ -1,5 +1,7 @@
+package Backtracking;
 import java.util.Arrays;
 import java.util.List;
+import AlogritmoGenetico.FileManager;
 
 public class CaixeiroViajante {
 
@@ -7,15 +9,10 @@ public class CaixeiroViajante {
     static int[] minPath;
 
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
         FileManager fileManager = new FileManager();
-
-        // Lê o arquivo de entrada
-        List<String> inputLines = fileManager.stringReader("PaaTravelling-Salesman-Problem\\src\\data\\teste2.txt");
-
-        // Número de vértices
+        List<String> inputLines = fileManager.stringReader("PaaTravelling-Salesman-Problem\\src\\data\\teste.txt");
         int n = Integer.parseInt(inputLines.get(0));
-
-        // Inicializa as estruturas de dados
         int vetorSolucao[] = new int[n];
         boolean vetorDisponiveis[] = new boolean[n];
         Arrays.fill(vetorDisponiveis, true);
@@ -36,15 +33,20 @@ public class CaixeiroViajante {
                 }
             }
         }
+        
         int[] path = new int[n];
         boolean[] visited = new boolean[n];
         path[0] = 0;
         visited[0] = true;
         backtracking(1, n, grafo, path, visited, 0);
-
         System.out.println("Tamanho do Grafo: "+ grafo.length);
         System.out.println(minCost);
         System.out.println(Arrays.toString(minPath));
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        long elapsedSeconds = elapsedTime / 1000;
+        long secondsDisplay = elapsedSeconds % 60;
+        long elapsedMinutes = elapsedSeconds / 60;
+        System.out.println("Tempo de Execução: "+ elapsedMinutes + " minutos e " + secondsDisplay + " segundos");
     }
 
     public static void backtracking(int pos, int n, int[][] graph, int[] path, boolean[] visited, int currentCost) {
